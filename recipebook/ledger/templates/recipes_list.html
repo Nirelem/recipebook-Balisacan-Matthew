@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Task List {% endblock %}
+
+{% block content %}
+		<ul style="list-style-type: none">
+			{% for recipe in recipes %}
+				<li style="list-style-type: circle">{{recipe.name}}</li>
+				<li>
+					<p>Ingredients:</p>
+					<ul style="list-style-type: none">
+						{% for description in recipe.ingredients %}
+							<li><p>{{description.name}} : {{description.quantity}}</p></li>
+						{% endfor %}
+					</ul>
+				</li>
+				<li><a href="/ledger{{recipe.link}}">Link to {{recipe.name}}</a></li>
+				<li style="list-style-type: none"><br></li>
+			{% endfor %}
+		</ul>
+{% endblock %}
