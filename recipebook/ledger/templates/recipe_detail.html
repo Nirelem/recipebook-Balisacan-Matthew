@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} {{ recipe.name }} {% endblock %}
+
+{% block page_heading %} {{ recipe.name }} {% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h2>Ingredients:</h2>
+		<ul>
+            {% for ingredient in ingredients %}
+                <li>{{ ingredient.quantity }} - {{ ingredient.ingredient.name }}</li>
+            {% empty %}
+                <li>No ingredients listed.</li>
+            {% endfor %}
+        </ul>
+        <p>Author: {{ recipe.author.username }}</p>
+        <a href="{% url 'ledger:recipes_list' %}">Back to Recipe List</a>
+    {% else %}
+        <p>You must be logged in to view this page.</p>
+        <a href="/accounts/login">Login</a>
+    {% endif %}
+{% endblock %}
