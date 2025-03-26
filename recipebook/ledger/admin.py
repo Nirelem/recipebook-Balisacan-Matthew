@@ -3,7 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 # Register your models here.
-from .models import Ingredient, Recipe, RecipeIngredient, Profile
+from .models import Ingredient, Recipe, RecipeIngredient, Profile, RecipeImage
+
+class RecipeImageInline(admin.TabularInline):
+    model = RecipeImage
+    extra = 1
 
 class ProfileInline(admin.StackedInline):
     model = Profile
@@ -14,6 +18,7 @@ class UserAdmin(BaseUserAdmin):
 
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
+    inlines = [RecipeImageInline]
 
 class IngredientAdmin(admin.ModelAdmin):
     model = Ingredient
@@ -21,6 +26,7 @@ class IngredientAdmin(admin.ModelAdmin):
 class RecipeIngredientAdmin(admin.ModelAdmin):
     model = RecipeIngredient
 
+# admin.site.unregister(Recipe)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(RecipeIngredient, RecipeIngredientAdmin)
